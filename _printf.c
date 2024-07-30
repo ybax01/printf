@@ -51,8 +51,6 @@ int handle_format(const char *format, va_list args)
 	return (count);
 }
 
-#include "main.h"
-
 /**
  * _printf - a replica of "printf" from the standard C library
  * @format: string with possible directives
