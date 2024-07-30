@@ -1,2 +1,1 @@
-A custom function to replicate "printf" in the standard library
-
+this is print f creation
