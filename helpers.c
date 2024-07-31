@@ -23,7 +23,7 @@ int handle_string(char *s)
 	int count = 0;
 
 	if (!s)
-		return (count);
+		s = "(null)";
 	while (*s)
 	{
 		count += _putchar(*s);
