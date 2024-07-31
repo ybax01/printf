@@ -1,66 +1,72 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
-
 /**
- * _printf - Printf function
- * @format: format.
- * Return: Printed chars.
+ * handle_format - handles the format specifiers
+ * @format: the format string
+ * @args: the arguments list
+ *
+ * Return: the number of characters printed
  */
-int _printf(const char *format, ...)
+int handle_format(const char *format, va_list args)
 {
-	int i, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buff_ind = 0;
-	va_list list;
-	char buffer[BUFF_SIZE];
+	int i = 0, count = 0;
+	char c, *s;
+	int d;
 
-	if (format == NULL)
-		return (-1);
-
-	va_start(list, format);
-
-	for (i = 0; format && format[i] != '\0'; i++)
+	while (format[i])
 	{
-		if (format[i] != '%')
+		if (format[i] == '%')
 		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[i], 1);*/
-			printed_chars++;
+			i++;
+			switch (format[i])
+			{
+				case 'c':
+					c = va_arg(args, int);
+					count += handle_char(c);
+					break;
+				case 's':
+					s = va_arg(args, char *);
+					count += handle_string(s);
+					break;
+				case 'd':
+				case 'i':
+					d = va_arg(args, int);
+					count += handle_integer(d);
+					break;
+				case '%':
+					count += _putchar('%');
+					break;
+				default:
+					count += _putchar('%');
+					count += _putchar(format[i]);
+					break;
+			}
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
-			++i;
-			printed = handle_print(format, &i, list, buffer,
-				flags, width, precision, size);
-			if (printed == -1)
-				return (-1);
-			printed_chars += printed;
+			count += _putchar(format[i]);
 		}
+		i++;
 	}
-
-	print_buffer(buffer, &buff_ind);
-
-	va_end(list);
-
-	return (printed_chars);
+	return (count);
 }
 
 /**
- * print_buffer - Prints the contents of the buffer if it exist
- * @buffer: Array of chars
- * @buff_ind: Index at which to add next char, represents the length.
+ * _printf - a replica of "printf" from the standard C library
+ * @format: string with possible directives
+ *
+ * Return: num of characters printed excluding null byte
  */
-void print_buffer(char buffer[], int *buff_ind)
+int _printf(const char *format, ...)
 {
-	if (*buff_ind > 0)
-		write(1, &buffer[0], *buff_ind);
+	va_list args;
+	int count;
 
-	*buff_ind = 0;
+	va_start(args, format);
+	if (!format)
+		return (-1);
+	count = handle_format(format, args);
+	va_end(args);
+	return (count);
 }
+
