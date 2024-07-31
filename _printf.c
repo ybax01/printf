@@ -37,6 +37,22 @@ int handle_format(const char *format, va_list args)
 					u = va_arg(args, unsigned int);
 					count += handle_binary(u);
 					break;
+				case 'u':
+					u = va_arg(args, unsigned int);
+					count += handle_unsigned(u);
+					break;
+				case 'o':
+					u = va_arg(args, unsigned int);
+					count += handle_octal(u);
+					break;
+				case 'x':
+					u = va_arg(args, unsigned int);
+					count += handle_hex(u, 0);
+					break;
+				case 'X':
+					u = va_arg(args, unsigned int);
+					count += handle_hex(u, 1);
+					break;
 				case '%':
 					count += _putchar('%');
 					break;
