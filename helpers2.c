@@ -1,34 +1,5 @@
 #include "main.h"
 
-/**
- * handle_binary - handles the %b specifier
- * @n: the unsigned int to convert to binary
- *
- * Return: the number of characters printed
- */
-int handle_binary(unsigned int n)
-{
-	int count = 0;
-	unsigned int num = n;
-	int binary[32];
-	int i = 0;
-
-	if (n == 0)
-		return (_putchar('0'));
-
-	while (num > 0)
-	{
-		binary[i] = num % 2;
-		num /= 2;
-		i++;
-	}
-
-	for (i--; i >= 0; i--)
-		count += _putchar(binary[i] + '0');
-
-	return (count);
-}
-
 
 
 
@@ -112,4 +83,3 @@ int handle_hex(unsigned int n, int uppercase)
 
 	return (count + 1);
 }
-
