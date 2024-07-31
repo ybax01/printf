@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * handle_binary - handles the %b specifier
  * @n: the unsigned int to convert to binary
