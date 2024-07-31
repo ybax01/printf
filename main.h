@@ -11,6 +11,8 @@ int _putchar(char c);
 int handle_char(char c);
 int handle_string(char *s);
 int handle_integer(int n);
+int handle_binary(unsigned int n);
+
 int handle_format(const char *format, va_list args);
 
 #endif /* MAIN_H */

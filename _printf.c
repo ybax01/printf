@@ -33,6 +33,10 @@ int handle_format(const char *format, va_list args)
 					d = va_arg(args, int);
 					count += handle_integer(d);
 					break;
+				case 'b':
+					u = va_arg(args, unsigned int);
+					count += handle_binary(u);
+					break;
 				case '%':
 					count += _putchar('%');
 					break;
